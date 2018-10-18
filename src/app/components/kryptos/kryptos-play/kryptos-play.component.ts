@@ -34,7 +34,6 @@ export class KryptosPlayComponent implements OnInit {
     if (this.auth.isAuthenticated()) {
       this.showSuccess = false;
       this.loadUserLevel();
-      this.loadUserRank();
     } else {
       this.router.navigate(['/signin']);
     }
@@ -44,6 +43,7 @@ export class KryptosPlayComponent implements OnInit {
     this.kryptosService.pullUserLevel()
       .subscribe(level => {
         this.level = level;
+        this.loadUserRank();
       });
   }
 
