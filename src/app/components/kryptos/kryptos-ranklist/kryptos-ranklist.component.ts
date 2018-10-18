@@ -41,8 +41,11 @@ export class KryptosRanklistComponent implements OnInit {
 
   loadRanklist() {
     return this.kryptosService.pullRanklist()
-      .subscribe(ranklist => {
-        this.ranklist = ranklist;
+      .subscribe(response => {
+        if (response.hasOwnProperty("ranklist"))
+          this.ranklist = response["ranklist"];
+        else
+          this.ranklist = [];
       });
 
     // var ws = new $WebSocket('ws://localhost:8000/leaderboard/kryptos');
