@@ -4,7 +4,7 @@
       <span class="red">LEVEL</span>
       <span class="white">{{ level.level }}</span>
       <span class="red">RANK</span>
-      <span class="white" *ngIf="myrank.kryptos.rank">{{ myrank.kryptos.rank }}</span>
+      <span class="white" *ngIf="myrank && myrank.kryptos && myrank.kryptos.rank">{{ myrank.kryptos.rank }}</span>
     </div>
     <div class="cb"></div>
   </div>
