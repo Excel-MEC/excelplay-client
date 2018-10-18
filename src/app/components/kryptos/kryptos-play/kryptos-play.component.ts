@@ -50,7 +50,7 @@ export class KryptosPlayComponent implements OnInit {
   loadUserRank() {
     this.kryptosService.pullMyRank()
       .subscribe(myrank => {
-        this.myrank = myrank.kryptos.rank;
+        this.myrank = myrank;
       });
   }
 
