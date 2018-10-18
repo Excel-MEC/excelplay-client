@@ -46,7 +46,6 @@ export class KryptosRanklistComponent implements OnInit {
           this.ranklist = response["ranklist"];
         else
           this.ranklist = [];
-        console.log(this.ranklist);
       });
 
     // var ws = new $WebSocket('ws://localhost:8000/leaderboard/kryptos');

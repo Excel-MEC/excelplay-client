@@ -14,6 +14,7 @@
         <img src="{{ apiRoot }}{{ level.level_file }}" alt="" width="100%" *ngIf="level.filetype=='I'" class="bas-width">
         <a href="{{ apiRoot }}{{ level.level_file }}" *ngIf="level.filetype=='NI'">Download file here</a>
         <br/>
+        <p *ngIf="level.source_hint">{{ level.source_hint }}</p>
         <br/>
         <br/>
         <br/>
