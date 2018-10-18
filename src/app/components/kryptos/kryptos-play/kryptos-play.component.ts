@@ -44,6 +44,8 @@ export class KryptosPlayComponent implements OnInit {
       .subscribe(level => {
         this.level = level;
         this.loadUserRank();
+        if (level == 5)
+          console.log("an");
       });
   }
 
