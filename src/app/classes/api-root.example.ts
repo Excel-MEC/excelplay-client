@@ -1,10 +1,10 @@
 export function ApiRoot() {
-  return 'http://localhost:9000';
+  return window.location.origin;
 }
 export function ApiRootHostname() {
-  return 'localhost:9000';
+  return window.location.host;
 }
 
 export function ApiRootHostname_nodir() {
-  return 'localhost:9000/';
+  return window.location.host+'/';
 }
