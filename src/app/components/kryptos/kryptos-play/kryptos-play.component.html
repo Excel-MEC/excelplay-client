@@ -1,0 +1,43 @@
+<div *ngIf="level">
+  <div class="game-status content">
+    <div class="float-right status-data">
+      <span class="red">LEVEL</span>
+      <span class="white">{{ level.level }}</span>
+      <span class="red">RANK</span>
+      <span class="white" *ngIf="myrank">{{ myrank.rank }}</span>
+    </div>
+    <div class="cb"></div>
+  </div>
+  <div class="game-content content">
+    <div style="text-align: center;" *ngIf="!(level.level == 31 || level.level == 100)">
+      <div class="col-lg-6 offset-lg-3">
+        <img src="{{apiRoot}}/kryptos{{ level.level_file }}" alt="" width="100%" *ngIf="level.filetype=='I'" class="bas-width">
+        <a href="{{apiRoot}}/kryptos{{ level.level_file }}" *ngIf="level.filetype=='NI'">Download file here</a>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="input-group kryptos-submit" style="text-align: center">
+          <input type="text" class="form-control" name="answer" id="answer" placeholder="Your answer..." [(ngModel)]="answer" (keyup.enter)="submitAnswer()">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button" (click)="submitAnswer()">SUBMIT</button>
+          </span>
+        </div>
+        <div>
+          <div class="alert alert-warning" *ngIf="showError">The answer is wrong.</div>
+          <div class="alert alert-warning" *ngIf="showSuccess">Correct answer!</div>
+        </div>
+      </div>
+      <div style="display: none;">{{ level.source }}</div>
+    </div>
+    <div *ngIf="(level.level == 31 || level.level == 100)">
+      <div class="alert alert-success">
+        Congratulations! You've successfully completed Kryptos!
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<br/>
+<br/>
+<br/>
