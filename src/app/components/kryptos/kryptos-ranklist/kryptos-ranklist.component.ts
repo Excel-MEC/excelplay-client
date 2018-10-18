@@ -41,7 +41,7 @@ export class KryptosRanklistComponent implements OnInit {
 
   loadRanklist() {
     return this.kryptosService.pullRanklist()
-      .subscrible(ranklist => {
+      .subscribe(ranklist => {
         this.ranklist = ranklist;
       });
 
