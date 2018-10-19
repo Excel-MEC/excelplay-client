@@ -8,7 +8,7 @@
           <img src="assets/images/dock/kry-grey.png" alt="">
           <span class="event-name">Kryptos</span>
           <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!myrank">N/A</span>
+          <span class="rank-value" *ngIf="!(myrank && myrank.kryptos && myrank.kryptos.rank)">N/A</span>
           <span class="rank-value" *ngIf="myrank && myrank.kryptos && myrank.kryptos.rank">{{ myrank.kryptos.rank }}</span>
         </a>
       </div>
@@ -17,8 +17,8 @@
           <img src="assets/images/dock/hash2-grey.png" alt="">
           <span class="event-name">#include</span>
           <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!myrank">N/A</span>
-          <span class="rank-value" *ngIf="myrank">{{ myrank.hirank }}</span>
+          <span class="rank-value" *ngIf="!(myrank && myrank.hashinclude && myrank.hashinclude.rank)">N/A</span>
+          <span class="rank-value" *ngIf="myrank && myrank.hashinclude && myrank.hashinclude.rank">{{ myrank.hirank }}</span>
         </a>
       </div>
     </div>
@@ -29,8 +29,8 @@
           <img src="assets/images/dock/bull5-grey.png" alt="">
           <span class="event-name">Dalalbull</span>
           <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!myrank">N/A</span>
-          <span class="rank-value" *ngIf="myrank">{{ myrank.dbrank }}</span>
+          <span class="rank-value" *ngIf="!(myrank && myrank.dalalbull && myrank.dalalbull.rank)">N/A</span>
+          <span class="rank-value" *ngIf="myrank && myrank.dalalbull && myrank.dalalbull.rank">{{ myrank.dbrank }}</span>
         </a>
       </div>
       <div class="col-lg-4 inactive-game">
@@ -38,8 +38,8 @@
           <img src="assets/images/dock/ech2-grey.png" alt="">
           <span class="event-name">Echo</span>
           <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!myrank">N/A</span>
-          <span class="rank-value" *ngIf="myrank">{{ myrank.echorank }}</span>
+          <span class="rank-value" *ngIf="!(myrank && myrank.echo && myrank.echo.rank)">N/A</span>
+          <span class="rank-value" *ngIf="myrank && myrank.echo && myrank.echo.rank">{{ myrank.echorank }}</span>
         </a>
       </div>
     </div>
