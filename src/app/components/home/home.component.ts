@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.homeState = 'active';
-    // this.loadAllRanks();
+    this.loadAllRanks();
   }
 
   deactivateHomeState() {
