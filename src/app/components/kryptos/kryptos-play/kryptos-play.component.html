@@ -9,7 +9,7 @@
     <div class="cb"></div>
   </div>
   <div class="game-content content">
-    <div style="text-align: center;" *ngIf="!(level.level == 31 || level.level == 100)">
+    <div style="text-align: center;" *ngIf="!(level.level == 37 || level.level == 100)">
       <div class="col-lg-6 offset-lg-3">
         <img src="{{ apiRoot }}{{ level.level_file }}" alt="" width="100%" *ngIf="level.filetype=='I'" class="bas-width">
         <a href="{{ apiRoot }}{{ level.level_file }}" *ngIf="level.filetype=='NI'">Download file here</a>
