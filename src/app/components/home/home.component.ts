@@ -39,13 +39,13 @@ export class HomeComponent implements OnInit {
     this.homeState = 'inactive';
   }
 
-  // loadAllRanks() {
-  //   if (this.auth.isAuthenticated()) {
-  //     this.commonService.pullMyRanks()
-  //       .subscribe(myrank => {
-  //         this.myrank = myrank.ranklist;
-  //       });
-  //   }
-  // }
+  loadAllRanks() {
+    if (this.auth.isAuthenticated()) {
+      this.commonService.pullMyRanks()
+        .subscribe(myrank => {
+          this.myrank = myrank;
+        });
+    }
+  }
 
 }

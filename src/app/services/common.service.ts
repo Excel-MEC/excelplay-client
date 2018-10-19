@@ -21,7 +21,7 @@ export class CommonService extends Service {
   }
 
   pullMyRanks() {
-    return this.makeGETAPICall('/getRank');
+    return this.makeGETAPICall('/auth/leaderboard/rank');
   }
 
 }

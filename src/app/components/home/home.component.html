@@ -9,10 +9,10 @@
           <span class="event-name">Kryptos</span>
           <span class="rank-text">Rank</span>
           <span class="rank-value" *ngIf="!myrank">N/A</span>
-          <span class="rank-value" *ngIf="myrank">{{ myrank.krytosrank }}</span>
+          <span class="rank-value" *ngIf="myrank && myrank.kryptos && myrank.kryptos.rank">{{ myrank.kryptos.rank }}</span>
         </a>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4 inactive-game">
         <a href="#" (click)="deactivateHomeState()" [@homeState]="homeState" [routerLink]="['/games', 'hashinclude']">
           <img src="assets/images/dock/hash2-grey.png" alt="">
           <span class="event-name">#include</span>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="row justify-content-around">
-      <div class="col-lg-4">
+      <div class="col-lg-4 inactive-game">
         <a href="#" (click)="deactivateHomeState()" [@homeState]="homeState" [routerLink]="['/games', 'dalalbull']">
           <img src="assets/images/dock/bull5-grey.png" alt="">
           <span class="event-name">Dalalbull</span>
@@ -33,7 +33,7 @@
           <span class="rank-value" *ngIf="myrank">{{ myrank.dbrank }}</span>
         </a>
       </div>
-      <div class="col-lg-4">
+      <div class="col-lg-4 inactive-game">
         <a href="#" (click)="deactivateHomeState()" [@homeState]="homeState" [routerLink]="['/games', 'echo']">
           <img src="assets/images/dock/ech2-grey.png" alt="">
           <span class="event-name">Echo</span>
