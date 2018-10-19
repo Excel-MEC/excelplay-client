@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { DalalbullService } from '../../../services/dalalbull.service';
+import { DalalbullService } from 'src/app/services/dalalbull.service';
 
-import { $WebSocket } from 'angular2-websocket/angular2-websocket';
+// import { $WebSocket } from 'angular2-websocket/angular2-websocket';
 
-import { ApiRootHostname_nodir } from '../../../classes/api-root';
+import { ApiRootHostname_nodir } from 'src/app/classes/api-root';
 
-let mySellWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/sell-channel/");
+import { WebsocketService } from 'src/app/services/websocket.service';
+
+// let mySellWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/sell-channel/");
 
 @Component({
   selector: 'app-dalalbull-stock',
@@ -42,22 +44,24 @@ export class DalalbullStockComponent implements OnInit {
 
 
   constructor(
-    private dalalbullService: DalalbullService
+    private dalalbullService: DalalbullService,
+    private websocketService: WebsocketService
   ) { }
 
   ngOnInit() {
     if (this.isGoodTime()) {
       this.loadData();
-      mySellWs.onMessage(
-        (msg: MessageEvent)=> {
-          var data = JSON.parse(msg.data);
-          if (!data.accept) {
-            this.stock_in_hand = data.trans;
-            this.stock_in_hand.thisStock = this.stock_in_hand.filter(s => s.company==this.stock);
-          }
-        },
-        {autoApply: false}
-      );
+      // mySellWs.onMessage(
+      //   (msg: MessageEvent)=> {
+      //     var data = JSON.parse(msg.data);
+      //     if (!data.accept) {
+      //       this.stock_in_hand = data.trans;
+      //       this.stock_in_hand.thisStock = this.stock_in_hand.filter(s => s.company==this.stock);
+      //     }
+      //   },
+      //   {autoApply: false}
+      // );
+
     } else {
       this.marketClosed = true;
     }

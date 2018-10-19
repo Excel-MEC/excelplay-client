@@ -2,15 +2,15 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-import { BaseChartDirective } from 'ng2-charts/ng2-charts';
+// import { BaseChartDirective } from 'ng2-charts/ng2-charts';
 
 import { DalalbullService } from '../../../services/dalalbull.service';
 
-import { $WebSocket } from 'angular2-websocket/angular2-websocket';
+// import { $WebSocket } from 'angular2-websocket/angular2-websocket';
 
 import { ApiRootHostname_nodir } from '../../../classes/api-root';
 
-import { NgFuseService, NgFuseOptions } from 'ng2-fuse';
+// import { NgFuseService, NgFuseOptions } from 'ng2-fuse';
 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -20,9 +20,9 @@ import { DalalbullStockComponent } from '../dalalbull-stock/dalalbull-stock.comp
 
 import { AuthService } from '../../../services/auth.service';
 
-let myTickerWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/ticker-channel/");
-let myGraphWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/graph-channel/");
-let myPortfolioWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/portfolio-channel/");
+// let myTickerWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/ticker-channel/");
+// let myGraphWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/graph-channel/");
+// let myPortfolioWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/portfolio-channel/");
 
 @Component({
   selector: 'app-dalalbull-play',
@@ -67,8 +67,8 @@ export class DalalbullPlayComponent implements OnInit {
   public stockMap: StockMap = new StockMap();
 
   // @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-   private fuse: NgFuseService = new NgFuseService();
+  //  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
+  //  private fuse: NgFuseService = new NgFuseService();
 
   constructor(
     private dalalbullService: DalalbullService,
@@ -133,21 +133,21 @@ export class DalalbullPlayComponent implements OnInit {
   }
 
   refreshSearchStatus() {
-    if (this.searchKeyword) {
-      var result = this.fuse.search(this.tickerSymbols, this.searchKeyword);
-      this.filteredSearchResults = [];
-      result.forEach(r => {
-        if (r <= 50) {
-          this.filteredSearchResults.push(this.tickerData[r]);
-        } else {
-          if (result.indexOf(r-51) == -1) {
-            this.filteredSearchResults.push(this.tickerData[r-51]);
-          }
-        }
-      });
-    } else {
-      this.filteredSearchResults = this.tickerData;
-    }
+    // if (this.searchKeyword) {
+    //   var result = this.fuse.search(this.tickerSymbols, this.searchKeyword);
+    //   this.filteredSearchResults = [];
+    //   result.forEach(r => {
+    //     if (r <= 50) {
+    //       this.filteredSearchResults.push(this.tickerData[r]);
+    //     } else {
+    //       if (result.indexOf(r-51) == -1) {
+    //         this.filteredSearchResults.push(this.tickerData[r-51]);
+    //       }
+    //     }
+    //   });
+    // } else {
+    //   this.filteredSearchResults = this.tickerData;
+    // }
   }
 
   openStockPanel(symbol: string) {
@@ -165,25 +165,25 @@ export class DalalbullPlayComponent implements OnInit {
         this.userPortfolio = res;
       });
 
-    myPortfolioWs.onMessage(
-      (msg: MessageEvent)=> {
-        var data = JSON.parse(msg.data);
-        if (!data.accept) {
-          this.userPortfolio = {};
-          this.userPortfolio.rank = data.rank;
-          this.userPortfolio.net_worth = data.net_worth;
-          this.userPortfolio.cash_bal = data.cash_bal;
-          this.userPortfolio.margin = data.margin;
-        }
-      },
-      {autoApply: false}
-    );
+    // myPortfolioWs.onMessage(
+    //   (msg: MessageEvent)=> {
+    //     var data = JSON.parse(msg.data);
+    //     if (!data.accept) {
+    //       this.userPortfolio = {};
+    //       this.userPortfolio.rank = data.rank;
+    //       this.userPortfolio.net_worth = data.net_worth;
+    //       this.userPortfolio.cash_bal = data.cash_bal;
+    //       this.userPortfolio.margin = data.margin;
+    //     }
+    //   },
+    //   {autoApply: false}
+    // );
   }
 
   getTickerData() {
     this.dalalbullService.pullTickerData()
       .subscribe(res => {
-        this.tickerData = res.tickerData;
+        this.tickerData = res["tickerData"];
         this.tickerSymbols = [];
         this.tickerData.forEach((t) => {
           this.tickerSymbols.push(t.name);
@@ -194,53 +194,53 @@ export class DalalbullPlayComponent implements OnInit {
         this.filteredSearchResults = this.tickerData;
       });
 
-    myTickerWs.onMessage(
-        (msg: MessageEvent)=> {
-          var data = JSON.parse(msg.data);
-          if (data.tickerData) {
-            // console.log(this.tickerData);
-            this.tickerData = [];
-            setTimeout(() => {
-              this.tickerData = data.tickerData;
-              this.filteredSearchResults = this.tickerData;
-            }, 5);
-          }
-        },
-        {autoApply: false}
-    );
+    // myTickerWs.onMessage(
+    //     (msg: MessageEvent)=> {
+    //       var data = JSON.parse(msg.data);
+    //       if (data.tickerData) {
+    //         // console.log(this.tickerData);
+    //         this.tickerData = [];
+    //         setTimeout(() => {
+    //           this.tickerData = data.tickerData;
+    //           this.filteredSearchResults = this.tickerData;
+    //         }, 5);
+    //       }
+    //     },
+    //     {autoApply: false}
+    // );
   }
 
   getGraphData() {
     this.dalalbullService.pullGraphData()
       .subscribe(res => {
-        var p = res.graph_data;
+        var p = res["graph_data"];
         for (let x of p) {
           var y = parseFloat(x[1]);
           this.lineChartData[0].data.push(y);
           this.lineChartLabels.push(x[0]);
         }
-        this.chart.ngOnChanges({});
+        // this.chart.ngOnChanges({});
       });
 
-    myGraphWs.onMessage(
-        (msg: MessageEvent)=> {
-          var data = msg.data;
+    // myGraphWs.onMessage(
+    //     (msg: MessageEvent)=> {
+    //       var data = msg.data;
 
-          if (data.graph_data) {
-            var new_data = data.graph_data;
-            this.chart.chart.config.data.labels = [];
-            this.chart.chart.config.data.datasets[0].data = [];
-            this.chart.ngOnChanges({});
+    //       if (data.graph_data) {
+    //         var new_data = data.graph_data;
+    //         this.chart.chart.config.data.labels = [];
+    //         this.chart.chart.config.data.datasets[0].data = [];
+    //         this.chart.ngOnChanges({});
 
-            setTimeout(() => {
-              this.lineChartLabels.push(new_data[0]);
-              this.lineChartData[0].data.push(parseFloat(new_data[1]));
-              this.chart.ngOnChanges({});
-            }, 5);
-          }
-        },
-        {autoApply: false}
-    );
+    //         setTimeout(() => {
+    //           this.lineChartLabels.push(new_data[0]);
+    //           this.lineChartData[0].data.push(parseFloat(new_data[1]));
+    //           this.chart.ngOnChanges({});
+    //         }, 5);
+    //       }
+    //     },
+    //     {autoApply: false}
+    // );
   }
 
   closePanel() {
