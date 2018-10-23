@@ -16,12 +16,20 @@ import { KryptosPlayComponent } from './components/kryptos/kryptos-play/kryptos-
 import { KryptosRanklistComponent } from './components/kryptos/kryptos-ranklist/kryptos-ranklist.component';
 import { KryptosRulesComponent } from './components/kryptos/kryptos-rules/kryptos-rules.component';
 
+import { DalalbullComponent } from './components/dalalbull/dalalbull.component';
+import { DalalbullPlayComponent } from './components/dalalbull/dalalbull-play/dalalbull-play.component';
+import { DalalbullRulesComponent } from './components/dalalbull/dalalbull-rules/dalalbull-rules.component';
+import { DalalbullRanklistComponent } from './components/dalalbull/dalalbull-ranklist/dalalbull-ranklist.component';
+import { DalalbullHistoryComponent } from './components/dalalbull/dalalbull-history/dalalbull-history.component';
+import { DalalbullStockComponent } from './components/dalalbull/dalalbull-stock/dalalbull-stock.component';
+
 import { SigninComponent } from './components/signin/signin.component';
 import { CallbackComponent } from './components/callback/callback.component';
 
 import { KryptosService } from './services/kryptos.service';
 import { AuthService } from './services/auth.service';
 import { CommonService } from './services/common.service';
+import { WebsocketService } from './services/websocket.service';
 import { CookieService } from 'ngx-cookie-service';
 
 import { AppRoutes } from './app-routing.module';
@@ -35,6 +43,12 @@ import { AppRoutes } from './app-routing.module';
     KryptosPlayComponent,
     KryptosRanklistComponent,
     KryptosRulesComponent,
+    DalalbullComponent,
+    DalalbullHistoryComponent,
+    DalalbullPlayComponent,
+    DalalbullRanklistComponent,
+    DalalbullRulesComponent,
+    DalalbullStockComponent,
     SigninComponent,
     CallbackComponent,
   ],
@@ -53,6 +67,7 @@ import { AppRoutes } from './app-routing.module';
     AuthService,
     CommonService,
     CookieService,
+    WebsocketService,
   ],
   bootstrap: [AppComponent]
 })
