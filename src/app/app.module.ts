@@ -31,6 +31,7 @@ import { AuthService } from './services/auth.service';
 import { CommonService } from './services/common.service';
 import { WebsocketService } from './services/websocket.service';
 import { CookieService } from 'ngx-cookie-service';
+import { DalalbullService } from './services/dalalbull.service';
 
 import { AppRoutes } from './app-routing.module';
 
@@ -68,6 +69,7 @@ import { AppRoutes } from './app-routing.module';
     CommonService,
     CookieService,
     WebsocketService,
+    DalalbullService
   ],
   bootstrap: [AppComponent]
 })

@@ -20,25 +20,25 @@ export class DalalbullService extends Service {
   }
 
   addDBUser() {
-    return this.makeGETAPICall('/dalalbull/api/v1/handShake');
+    return this.makeGETAPICall('/dalalbull/api/handshake/');
   }
 
   pullTickerData() {
-    return this.makeGETAPICall('/dalalbull/api/v1/ticker');
+    return this.makeGETAPICall('/dalalbull/api/ticker/');
   }
 
   pullGraphData() {
-    return this.makeGETAPICall('/dalalbull/api/v1/graph');
+    return this.makeGETAPICall('/dalalbull/api/graph/');
   }
 
   pullUserPortfolio() {
-    return this.makeGETAPICall('/dalalbull/api/v1/portfolio');
+    return this.makeGETAPICall('/dalalbull/api/portfolioview/');
   }
 
   pullCompanyData(symbol: string) {
     let body = new FormData();
     body.append('company', symbol);
-    return this.makePOSTAPICall('/dalalbull/api/v1/companydetails', body);
+    return this.makePOSTAPICall('/dalalbull/api/companydetails', body);
   }
 
   buyStock(quantity, company, pending) {
@@ -47,7 +47,7 @@ export class DalalbullService extends Service {
     body.append('b_ss', 'Buy');
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
-    return this.makePOSTAPICall('/dalalbull/api/v1/submit_buy', body);
+    return this.makePOSTAPICall('/dalalbull/api/buy/', body);
   }
 
   shortSellStock(quantity, company, pending) {
@@ -56,7 +56,7 @@ export class DalalbullService extends Service {
     body.append('b_ss', 'Short Sell');
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
-    return this.makePOSTAPICall('/dalalbull/api/v1/submit_buy', body);
+    return this.makePOSTAPICall('/dalalbull/api/buy/', body);
   }
 
   sellOrSCStock(sell_sc, quantity, company, pending) {
@@ -66,27 +66,28 @@ export class DalalbullService extends Service {
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
 
-    return this.makePOSTAPICall('/dalalbull/api/v1/submit_sell', body);
+    return this.makePOSTAPICall('/dalalbull/api/sell/', body);
   }
 
   pullBoughtStock() {
-    return this.makeGETAPICall('/dalalbull/api/v1/sell');
+    return this.makeGETAPICall('/dalalbull/api/sell/');
   }
 
   pullTransactionHistory_completed() {
-    return this.makeGETAPICall('/dalalbull/api/v1/history');
+    return this.makeGETAPICall('/dalalbull/api/history/');
   }
 
   pullTransactionHistory_pending() {
-    return this.makeGETAPICall('/dalalbull/api/v1/pending');
+    return this.makeGETAPICall('/dalalbull/api/pending/');
   }
 
   pullRanklist() {
-    return this.makeGETAPICall('/dalalbull/api/v1/leaderboard');
+    return null;
+    // return this.makeGETAPICall('/dalalbull/api/leaderboard/');
   }
 
   pullStockInHand() {
-    return this.makeGETAPICall('/dalalbull/api/v1/sell');
+    return this.makeGETAPICall('/dalalbull/api/sell/');
   }
 
 }
