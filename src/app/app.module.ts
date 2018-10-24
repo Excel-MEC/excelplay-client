@@ -34,6 +34,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DalalbullService } from './services/dalalbull.service';
 
 import { AppRoutes } from './app-routing.module';
+import { ChartjsModule } from '@ctrl/ngx-chartjs';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { AppRoutes } from './app-routing.module';
     HttpModule,
     HttpClientModule,
     FormsModule,
+    ChartjsModule,
     RouterModule.forRoot(
       AppRoutes
     ),

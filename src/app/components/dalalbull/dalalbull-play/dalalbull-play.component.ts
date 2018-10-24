@@ -10,8 +10,6 @@ import { DalalbullService } from '../../../services/dalalbull.service';
 
 import { ApiRootHostname_nodir } from '../../../classes/api-root';
 
-// import { NgFuseService, NgFuseOptions } from 'ng2-fuse';
-
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 import { StockMap } from '../../../classes/stock-map';
@@ -19,7 +17,7 @@ import { StockMap } from '../../../classes/stock-map';
 import { DalalbullStockComponent } from '../dalalbull-stock/dalalbull-stock.component';
 
 import { AuthService } from '../../../services/auth.service';
-
+import { WebsocketService } from '../../../services/websocket.service';
 // let myTickerWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/ticker-channel/");
 // let myGraphWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/graph-channel/");
 // let myPortfolioWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/portfolio-channel/");
@@ -62,51 +60,65 @@ export class DalalbullPlayComponent implements OnInit {
   activeStock: string;
   stockVisibility: string = 'invisible';
 
+  data = {
+    labels: [],
+    datasets: [
+      {
+        label: 'My First Dataset',
+        data: [],
+        fill: false,
+        borderColor: '#8334e8',
+        lineTension: .1
+      },
+    ],
+  };
+
+  options = {
+    responsive: true,
+    title: {
+      display: true,
+      text: 'Chart.js Line Chart'
+    },
+    tooltips: {
+      mode: 'label',
+    },
+    scales: {
+      xAxes: [{
+        display: true,
+        gridLines: {
+          display: true,
+          color: 'rgba(255, 255, 255, .2)'
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Month'
+        }
+      }],
+      yAxes: [{
+        display: true,
+        gridLines: {
+          display: true,
+          color: 'rgba(255, 255, 255, .2)'
+        },
+        scaleLabel: {
+          display: true,
+          labelString: 'Month'
+        }
+      }]
+    }
+  };
+
+
   @ViewChild(DalalbullStockComponent) child: DalalbullStockComponent;
 
   public stockMap: StockMap = new StockMap();
 
-  // @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-  //  @ViewChild(BaseChartDirective) chart: BaseChartDirective;
-  //  private fuse: NgFuseService = new NgFuseService();
-
   constructor(
     private dalalbullService: DalalbullService,
     private auth: AuthService,
-    private router: Router
+    private router: Router,
+    private socket: WebsocketService
   ) { }
-
-  public lineChartData:Array<any> = [
-    {data: [], label: 'Nifty 50'}
-  ];
-  public lineChartLabels:Array<any> = [];
-  public lineChartOptions:any = {
-    responsive: true,
-    animation: false
-  };
-  public lineChartColors:Array<any> = [
-    { // grey
-      backgroundColor: 'rgba(148,159,177,0.2)',
-      borderColor: 'rgba(148,159,177,1)',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
-  ];
-  public lineChartLegend:boolean = false;
-  public lineChartType:string = 'line';
-
-  public randomize():void {
-    let _lineChartData:Array<any> = new Array(this.lineChartData.length);
-    for (let i = 0; i < this.lineChartData.length; i++) {
-      _lineChartData[i] = {data: new Array(this.lineChartData[i].data.length), label: this.lineChartData[i].label};
-      for (let j = 0; j < this.lineChartData[i].data.length; j++) {
-        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-      }
-    }
-    this.lineChartData = _lineChartData;
-  }
 
   // events
   public chartClicked(e:any):void {
@@ -132,19 +144,35 @@ export class DalalbullPlayComponent implements OnInit {
 
   }
 
+  levenshteinDistance (s, t) {
+    if (!s.length) return t.length;
+    if (!t.length) return s.length;
+
+    return Math.min(
+        this.levenshteinDistance(s.substr(1), t) + 1,
+        this.levenshteinDistance(t.substr(1), s) + 1,
+        this.levenshteinDistance(s.substr(1), t.substr(1)) + (s[0] !== t[0] ? 1 : 0)
+    ) + 1;
+  }
+
+  search(haystack, needle) {
+    var result = [];
+    return haystack.filter(s => this.levenshteinDistance(s, needle) > 0);
+  }
+
   refreshSearchStatus() {
     // if (this.searchKeyword) {
-    //   var result = this.fuse.search(this.tickerSymbols, this.searchKeyword);
-    //   this.filteredSearchResults = [];
-    //   result.forEach(r => {
-    //     if (r <= 50) {
-    //       this.filteredSearchResults.push(this.tickerData[r]);
-    //     } else {
-    //       if (result.indexOf(r-51) == -1) {
-    //         this.filteredSearchResults.push(this.tickerData[r-51]);
-    //       }
-    //     }
-    //   });
+    //   var result = this.search(this.tickerSymbols, this.searchKeyword);
+    //   // this.filteredSearchResults = [];
+    //   // result.forEach(r => {
+    //   //   if (r <= 50) {
+    //   //     this.filteredSearchResults.push(this.tickerData[r]);
+    //   //   } else {
+    //   //     if (result.indexOf(r-51) == -1) {
+    //   //       this.filteredSearchResults.push(this.tickerData[r-51]);
+    //   //     }
+    //   //   }
+    //   // });
     // } else {
     //   this.filteredSearchResults = this.tickerData;
     // }
@@ -213,15 +241,21 @@ export class DalalbullPlayComponent implements OnInit {
   getGraphData() {
     this.dalalbullService.pullGraphData()
       .subscribe(res => {
+        console.log(res);
         var p = res["graph_data"];
-        for (let x of p) {
-          var y = parseFloat(x[1]);
-          this.lineChartData[0].data.push(y);
-          this.lineChartLabels.push(x[0]);
-        }
-        // this.chart.ngOnChanges({});
-      });
+        this.changeGraphData(p);
 
+        this.socket.graphDataPull();
+      });
+  }
+
+
+
+  changeGraphData(p) {
+    for (let x of p) {
+      this.data.datasets[0].data.push(x[1]);
+      this.data.labels.push(x[0]);
+    }
     // myGraphWs.onMessage(
     //     (msg: MessageEvent)=> {
     //       var data = msg.data;
@@ -242,7 +276,6 @@ export class DalalbullPlayComponent implements OnInit {
     //     {autoApply: false}
     // );
   }
-
   closePanel() {
     // this.getUserPortfolio();
     this.activeStock = null;

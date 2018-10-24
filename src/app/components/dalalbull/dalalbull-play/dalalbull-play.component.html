@@ -53,13 +53,7 @@
     <app-dalalbull-stock class="col-lg-6" [@visibility]="stockVisibility" *ngIf="activeStock&&userPortfolio" [stock]="activeStock" (onClose)="closePanel()" [cash_available]="userPortfolio.cash_bal" [total_transactions]="userPortfolio.total_transactions"></app-dalalbull-stock>
     <div class="col-lg-6 graph-userdata" [@blurStatus]="blurStatus">
       <div height="400px">
-        <!-- <canvas #testChart='base-chart' baseChart width="100%"
-                      [datasets]="lineChartData"
-                      [labels]="lineChartLabels"
-                      [options]="lineChartOptions"
-                      [colors]="lineChartColors"
-                      [legend]="lineChartLegend"
-                      [chartType]="lineChartType"></canvas> -->
+        <ngx-chartjs [options]="options" [data]="data" type="line"></ngx-chartjs>
       </div>
       <br>
       <div class="user-data" *ngIf="userPortfolio">
