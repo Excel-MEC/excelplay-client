@@ -73,6 +73,8 @@ export class DalalbullPlayComponent implements OnInit {
     ],
   };
 
+  legend = { display: false };
+
   options = {
     responsive: true,
     tooltips: {
@@ -113,7 +115,7 @@ export class DalalbullPlayComponent implements OnInit {
     private dalalbullService: DalalbullService,
     private auth: AuthService,
     private router: Router,
-    private socket: WebsocketService
+    private websocketService: WebsocketService
   ) { }
 
   // events
@@ -230,7 +232,7 @@ export class DalalbullPlayComponent implements OnInit {
         var p = res["graph_data"];
         this.changeGraphData(p);
 
-        // this.socket.graphDataPull();
+        this.websocketService.graphDataPull();
       });
   }
 

@@ -27,24 +27,27 @@
       <div class="companies-list" *ngIf="tickerData">
         <div class="company" *ngFor="let c of filteredSearchResults" (click)="openStockPanel(c.name)">
           <div class="row">
-            <div class="float-left">
-              <h1>{{ c.name }}</h1>
-              <p>{{ stockMap.map[c.name] }}</p>
-            </div>
-            <div class="float-right">
-              <div class="data">
-                <span class="current-price">{{ c.current_price }}</span>
-                <span class="percentage-change positive-change" *ngIf="c.change_per >= 0">
-                  <i class="fa fa-arrow-up"></i>
-                  +{{ c.change_per }}%
-                </span>
-                <span class="percentage-change negative-change" *ngIf="c.change_per < 0">
-                  <i class="fa fa-arrow-down"></i>
-                  {{ c.change_per }}%
-                </span>
-                <br/>
-                <i class="fa fa-arrow-circle-right"></i>
-              </div>
+            <div width="100%">
+                <div class="float-left">
+                    <h1>{{ c.name }}</h1>
+                    <p>{{ stockMap.map[c.name] }}</p>
+                </div>
+                <div class="float-right">
+                  <div class="data">
+                    <span class="current-price">{{ c.current_price }}</span>
+                    <span class="percentage-change positive-change" *ngIf="c.change_per >= 0">
+                      <i class="fa fa-arrow-up"></i>
+                      +{{ c.change_per }}%
+                    </span>
+                    <span class="percentage-change negative-change" *ngIf="c.change_per < 0">
+                      <i class="fa fa-arrow-down"></i>
+                      {{ c.change_per }}%
+                    </span>
+                    <br/>
+                    <i class="fa fa-arrow-circle-right"></i>
+                  </div>
+                </div>
+                <div style="clear:both;"></div>
             </div>
           </div>
         </div>
@@ -53,7 +56,7 @@
     <app-dalalbull-stock class="col-lg-6" [@visibility]="stockVisibility" *ngIf="activeStock&&userPortfolio" [stock]="activeStock" (onClose)="closePanel()" [cash_available]="userPortfolio.cash_bal" [total_transactions]="userPortfolio.total_transactions"></app-dalalbull-stock>
     <div class="col-lg-6 graph-userdata" [@blurStatus]="blurStatus">
       <div height="400px">
-        <ngx-chartjs [options]="options" [data]="data" type="line"></ngx-chartjs>
+        <ngx-chartjs [options]="options" [legend]="legend" [data]="data" type="line"></ngx-chartjs>
       </div>
       <br>
       <div class="user-data" *ngIf="userPortfolio">
