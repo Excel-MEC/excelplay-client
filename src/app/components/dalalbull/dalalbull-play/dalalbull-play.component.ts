@@ -1,12 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { Router } from '@angular/router';
 
-// import { BaseChartDirective } from 'ng2-charts/ng2-charts';
-
 import { DalalbullService } from '../../../services/dalalbull.service';
-
-// import { $WebSocket } from 'angular2-websocket/angular2-websocket';
 
 import { ApiRootHostname_nodir } from '../../../classes/api-root';
 
@@ -18,9 +14,7 @@ import { DalalbullStockComponent } from '../dalalbull-stock/dalalbull-stock.comp
 
 import { AuthService } from '../../../services/auth.service';
 import { WebsocketService } from '../../../services/websocket.service';
-// let myTickerWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/ticker-channel/");
-// let myGraphWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/graph-channel/");
-// let myPortfolioWs = new $WebSocket("ws://"+ApiRootHostname_nodir()+"channel/dalalbull/portfolio-channel/");
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dalalbull-play',
@@ -49,7 +43,7 @@ import { WebsocketService } from '../../../services/websocket.service';
     ])
   ]
 })
-export class DalalbullPlayComponent implements OnInit {
+export class DalalbullPlayComponent implements OnInit, OnDestroy {
 
   tickerSymbols = [];
   tickerData;
@@ -110,6 +104,7 @@ export class DalalbullPlayComponent implements OnInit {
   @ViewChild(DalalbullStockComponent) child: DalalbullStockComponent;
 
   public stockMap: StockMap = new StockMap();
+  private wsQueue = [];
 
   constructor(
     private dalalbullService: DalalbullService,
@@ -174,102 +169,89 @@ export class DalalbullPlayComponent implements OnInit {
     }, 300);
   }
 
+  handlePortfolioData(d) {
+    this.userPortfolio = d;
+  }
+
   getUserPortfolio() {
     this.dalalbullService.pullUserPortfolio()
       .subscribe(res => {
-        this.userPortfolio = res;
-      });
+        this.handlePortfolioData(res);
 
-    // myPortfolioWs.onMessage(
-    //   (msg: MessageEvent)=> {
-    //     var data = JSON.parse(msg.data);
-    //     if (!data.accept) {
-    //       this.userPortfolio = {};
-    //       this.userPortfolio.rank = data.rank;
-    //       this.userPortfolio.net_worth = data.net_worth;
-    //       this.userPortfolio.cash_bal = data.cash_bal;
-    //       this.userPortfolio.margin = data.margin;
-    //     }
-    //   },
-    //   {autoApply: false}
-    // );
+        this.wsQueue.push(
+          this.websocketService.pullPortfolioData()
+            .subscribe(res2 => {
+              this.handlePortfolioData(res2);
+            })
+        );
+      });
+  }
+
+  handleTickerData(r) {
+    if ('tickerData' in r) {
+      this.tickerData = r["tickerData"];
+      this.tickerSymbols = [];
+      this.tickerData.forEach((t) => {
+        this.tickerSymbols.push(t.name);
+      });
+      this.tickerData.forEach((t) => {
+        this.tickerSymbols.push(this.stockMap.map[t.name]);
+      });
+      this.filteredSearchResults = this.tickerData;
+    }
   }
 
   getTickerData() {
     this.dalalbullService.pullTickerData()
       .subscribe(res => {
-        this.tickerData = res["tickerData"];
-        this.tickerSymbols = [];
-        this.tickerData.forEach((t) => {
-          this.tickerSymbols.push(t.name);
-        });
-        this.tickerData.forEach((t) => {
-          this.tickerSymbols.push(this.stockMap.map[t.name]);
-        });
-        this.filteredSearchResults = this.tickerData;
-      });
+        this.handleTickerData(res);
 
-    // myTickerWs.onMessage(
-    //     (msg: MessageEvent)=> {
-    //       var data = JSON.parse(msg.data);
-    //       if (data.tickerData) {
-    //         // console.log(this.tickerData);
-    //         this.tickerData = [];
-    //         setTimeout(() => {
-    //           this.tickerData = data.tickerData;
-    //           this.filteredSearchResults = this.tickerData;
-    //         }, 5);
-    //       }
-    //     },
-    //     {autoApply: false}
-    // );
+        this.wsQueue.push(
+          this.websocketService.pullTickerData()
+            .subscribe(res2 => {
+              this.handleTickerData(res2);
+            })
+        );
+      });
+  }
+
+  handleGraphData(d) {
+    if ('graph_data' in d) {
+      var p = d["graph_data"];
+      this.data.datasets[0].data = [];
+      this.data.labels = [];
+      for (let x of p) {
+        this.data.datasets[0].data.push(x[1]);
+        this.data.labels.push(x[0]);
+      }
+    }
   }
 
   getGraphData() {
     this.dalalbullService.pullGraphData()
       .subscribe(res => {
-        console.log(res);
-        var p = res["graph_data"];
-        this.changeGraphData(p);
+        this.handleGraphData(res);
 
-        this.websocketService.graphDataPull();
+        this.wsQueue.push(
+          this.websocketService.pullGraphData()
+            .subscribe(res2 => {
+              this.handleGraphData(res2);
+            })
+        );
       });
   }
 
-
-
-  changeGraphData(p) {
-    this.data.datasets[0].data = [];
-    this.data.labels = [];
-    for (let x of p) {
-      this.data.datasets[0].data.push(x[1]);
-      this.data.labels.push(x[0]);
-    }
-    // myGraphWs.onMessage(
-    //     (msg: MessageEvent)=> {
-    //       var data = msg.data;
-
-    //       if (data.graph_data) {
-    //         var new_data = data.graph_data;
-    //         this.chart.chart.config.data.labels = [];
-    //         this.chart.chart.config.data.datasets[0].data = [];
-    //         this.chart.ngOnChanges({});
-
-    //         setTimeout(() => {
-    //           this.lineChartLabels.push(new_data[0]);
-    //           this.lineChartData[0].data.push(parseFloat(new_data[1]));
-    //           this.chart.ngOnChanges({});
-    //         }, 5);
-    //       }
-    //     },
-    //     {autoApply: false}
-    // );
-  }
   closePanel() {
-    // this.getUserPortfolio();
+    this.getUserPortfolio();
     this.activeStock = null;
     this.stockVisibility = 'invisible';
     this.blurStatus = 'noblur';
+  }
+
+  ngOnDestroy() {
+    var w;
+    for (w in this.wsQueue)
+      w.unsubscribe();
   }
 
 }

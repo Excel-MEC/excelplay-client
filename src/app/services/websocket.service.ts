@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { webSocket } from 'rxjs/webSocket';
 import { QueueingSubject } from 'queueing-subject';
 import websocketConnect from 'rxjs-websockets';
 import { ApiRootHostname } from '../classes/api-root';
@@ -14,21 +13,23 @@ export class WebsocketService {
 
   constructor() { }
 
-  graphDataPull() {
-    const { messages, connectionStatus } = websocketConnect('ws://' + ApiRootHostname() + '/dalalbull/api/graph-channel/', this.input);
-    const messagesSubscription = messages.subscribe((message) => {
-      console.log('received message:', message)
-    })
+  wsConnect(url) {  
+    return websocketConnect('ws://' + ApiRootHostname() + url, this.input);
   }
 
-  poll(url: string) {
-    let subject = webSocket(url);
-    subject.subscribe(
-      (msg) => console.log('message received: ' + msg),
-      (err) => console.log(err),
-      () => console.log('complete')
-    );
-    subject.next(JSON.stringify({ op: 'hello' }));
+  pullGraphData() {
+    const { messages, connectionStatus } = this.wsConnect('/dalalbullws/channel/graph/');
+    return messages;
+  }
+
+  pullTickerData() {
+    const { messages, connectionStatus } = this.wsConnect('/dalalbullws/channel/ticker/');
+    return messages;
+  }
+
+  pullPortfolioData() {
+    const { messages, connectionStatus } = this.wsConnect('/dalalbullws/channel/portfolio/');
+    return messages;
   }
 
 }
