@@ -1,12 +1,13 @@
 <div class="main-stock" *ngIf="!marketClosed">
-  <i class="fa fa-times" (click)="onClose.emit(null);myTickerWs.close();"></i>
+  <!--<i class="fa fa-times" (click)="onClose.emit(null);myTickerWs.close();"></i>-->
+  <i class="fa fa-times" (click)="onClose.emit(null);"></i>
   <h2>Stock Info</h2>
   <h1>{{ stock }}</h1>
   <ul class="nav nav-tabs">
-    <li [ngClass]="{'active': currentTab=='stock'}" (click)="switchTab($event, 'stock')"><a>Stock</a></li>
-    <li [ngClass]="{'active': currentTab=='buy'}" (click)="switchTab($event, 'buy')"><a>Buy</a></li>
-    <li [ngClass]="{'active': currentTab=='ss'}" (click)="switchTab($event, 'ss')"><a>Short Sell</a></li>
-    <li [ngClass]="{'active': currentTab=='shares_in_hand'}" (click)="switchTab($event, 'shares_in_hand')"><a>Shares in hand</a></li>
+    <li class="nav-item px-3" [ngClass]="{'active': currentTab=='stock'}" (click)="switchTab($event, 'stock')"><a>Stock</a></li>
+    <li class="nav-item px-3" [ngClass]="{'active': currentTab=='buy'}" (click)="switchTab($event, 'buy')"><a>Buy</a></li>
+    <li class="nav-item px-3" [ngClass]="{'active': currentTab=='ss'}" (click)="switchTab($event, 'ss')"><a>Short Sell</a></li>
+    <li class="nav-item px-3" [ngClass]="{'active': currentTab=='shares_in_hand'}" (click)="switchTab($event, 'shares_in_hand')"><a>Shares in hand</a></li>
     <!-- <li [ngClass]="{'active': currentTab=='sell'}" (click)="switchTab($event, 'sell')"><a>Sell</a></li>
     <li [ngClass]="{'active': currentTab=='sc'}" (click)="switchTab($event, 'sc')"><a>Short Cover</a></li> -->
   </ul>
@@ -190,7 +191,8 @@
   </div>
 </div>
 <div class="main-stock" *ngIf="marketClosed">
-  <i class="fa fa-times" (click)="onClose.emit(null);myTickerWs.close();"></i>
+  <!--<i class="fa fa-times" (click)="onClose.emit(null);myTickerWs.close();"></i>-->
+  <i class="fa fa-times" (click)="onClose.emit(null);"></i>
   <h2 style="color: white; text-align: center;">
     <br/>
     <i class="fa fa-clock-o"></i>

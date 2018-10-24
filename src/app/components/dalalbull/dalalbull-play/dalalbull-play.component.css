@@ -2,7 +2,7 @@
     width: 90%;
     background-color: #3e3e3e;
     color: white;
-    border-top: 3px solid #ae4639;
+    border-top: 3px solid #0c7974;
   }
   .ticker .marquee {
     width: 100%;
@@ -45,7 +45,7 @@
     background-color: #3f943f;
   }
   .ticker .marquee span.all-companies .tickerCompany .percentage-change.negative-change {
-    background-color: #c73232;
+    background-color: #ae4639;
   }
   .ticker .marquee span:hover {
     animation-play-state: paused;
@@ -117,7 +117,7 @@
     background-color: #3f943f;
   }
   .companies-stock-data .companies-list .company .row .data .percentage-change.negative-change {
-    background-color: #d63d3d;
+    background-color: #ae4639;
   }
   .companies-stock-data .companies-list .company .row .data .fa-arrow-circle-right {
     float: right;
@@ -132,11 +132,11 @@
     text-align: center;
   }
   .graph-userdata .user-data .row .col-lg-6 h1 {
-    color: #e4e4e4;
+    color: #339d9c;
     margin-bottom: 0px;
   }
   .graph-userdata .user-data .row .col-lg-6 h3 {
-    color: #e44835;
+    color: #339d9c;
     margin-top: 6px;
   }
   

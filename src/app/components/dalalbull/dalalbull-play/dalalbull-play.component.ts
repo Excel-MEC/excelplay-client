@@ -64,10 +64,10 @@ export class DalalbullPlayComponent implements OnInit {
     labels: [],
     datasets: [
       {
-        label: 'My First Dataset',
+        label: 'NIFTY 50',
         data: [],
         fill: false,
-        borderColor: '#8334e8',
+        borderColor: '#00e311',
         lineTension: .1
       },
     ],
@@ -75,10 +75,6 @@ export class DalalbullPlayComponent implements OnInit {
 
   options = {
     responsive: true,
-    title: {
-      display: true,
-      text: 'Chart.js Line Chart'
-    },
     tooltips: {
       mode: 'label',
     },
@@ -91,7 +87,7 @@ export class DalalbullPlayComponent implements OnInit {
         },
         scaleLabel: {
           display: true,
-          labelString: 'Month'
+          labelString: 'Time'
         }
       }],
       yAxes: [{
@@ -102,7 +98,7 @@ export class DalalbullPlayComponent implements OnInit {
         },
         scaleLabel: {
           display: true,
-          labelString: 'Month'
+          labelString: 'Stock Value'
         }
       }]
     }
@@ -144,38 +140,27 @@ export class DalalbullPlayComponent implements OnInit {
 
   }
 
-  levenshteinDistance (s, t) {
-    if (!s.length) return t.length;
-    if (!t.length) return s.length;
-
-    return Math.min(
-        this.levenshteinDistance(s.substr(1), t) + 1,
-        this.levenshteinDistance(t.substr(1), s) + 1,
-        this.levenshteinDistance(s.substr(1), t.substr(1)) + (s[0] !== t[0] ? 1 : 0)
-    ) + 1;
+  isSubstring (s, t) {
+    if(s&&t){
+      return s.toLowerCase().includes(t.toLowerCase());
+    }
+    else{
+      return false;
+    }
   }
 
+
   search(haystack, needle) {
-    var result = [];
-    return haystack.filter(s => this.levenshteinDistance(s, needle) > 0);
+    return haystack.filter(s => this.isSubstring(s.name, needle));
   }
 
   refreshSearchStatus() {
-    // if (this.searchKeyword) {
-    //   var result = this.search(this.tickerSymbols, this.searchKeyword);
-    //   // this.filteredSearchResults = [];
-    //   // result.forEach(r => {
-    //   //   if (r <= 50) {
-    //   //     this.filteredSearchResults.push(this.tickerData[r]);
-    //   //   } else {
-    //   //     if (result.indexOf(r-51) == -1) {
-    //   //       this.filteredSearchResults.push(this.tickerData[r-51]);
-    //   //     }
-    //   //   }
-    //   // });
-    // } else {
-    //   this.filteredSearchResults = this.tickerData;
-    // }
+    if (this.searchKeyword) {
+      var result = this.search(this.tickerData, this.searchKeyword);
+      this.filteredSearchResults = result;
+    } else {
+      this.filteredSearchResults = this.tickerData;
+    }
   }
 
   openStockPanel(symbol: string) {
@@ -245,13 +230,15 @@ export class DalalbullPlayComponent implements OnInit {
         var p = res["graph_data"];
         this.changeGraphData(p);
 
-        this.socket.graphDataPull();
+        // this.socket.graphDataPull();
       });
   }
 
 
 
   changeGraphData(p) {
+    this.data.datasets[0].data = [];
+    this.data.labels = [];
     for (let x of p) {
       this.data.datasets[0].data.push(x[1]);
       this.data.labels.push(x[0]);

@@ -72,7 +72,7 @@ export class DalalbullStockComponent implements OnInit {
     var x = new Date();
     var time = x.getUTCHours()*60 + x.getUTCMinutes();
     var day = x.getDay();
-    if( (time>=225 && time<600) && ( day>=1 && day<=5 ) )
+    if( (time>=225 && time<1000) && ( day>=1 && day<=5 ) )
       return true;
     return false;
   }
@@ -138,6 +138,7 @@ export class DalalbullStockComponent implements OnInit {
         this.disableButtons = true;
         this.dalalbullService.buyStock(this.quantity, this.stock, pendingValue)
           .subscribe(res => {
+            console.log(res);
             if (res["cclose"]) {
               this.marketClosed = true;
             } else {

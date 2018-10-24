@@ -7,6 +7,7 @@ table {
     border-bottom: 0px;
     float: right;
     font-size: 1.4em;
+    padding: .3em;
   }
   .nav-tabs li.active a {
     color: dimgrey;
@@ -18,8 +19,10 @@ table {
     border-radius: 0;
     border: 1px solid white;
     color: white;
+    padding: .3em;
   }
   .nav-tabs li a:hover {
-    background: transparent;
+    background: white;
+    color: black;
   }
   

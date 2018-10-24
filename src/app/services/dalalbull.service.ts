@@ -38,7 +38,7 @@ export class DalalbullService extends Service {
   pullCompanyData(symbol: string) {
     let body = new FormData();
     body.append('company', symbol);
-    return this.makePOSTAPICall('/dalalbull/api/companydetails', body);
+    return this.makePOSTAPICall('/dalalbull/api/companydetails/', body);
   }
 
   buyStock(quantity, company, pending) {
@@ -47,7 +47,7 @@ export class DalalbullService extends Service {
     body.append('b_ss', 'Buy');
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
-    return this.makePOSTAPICall('/dalalbull/api/buy/', body);
+    return this.makePOSTAPICall('/dalalbull/api/submit_buy/', body);
   }
 
   shortSellStock(quantity, company, pending) {
@@ -56,7 +56,7 @@ export class DalalbullService extends Service {
     body.append('b_ss', 'Short Sell');
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
-    return this.makePOSTAPICall('/dalalbull/api/buy/', body);
+    return this.makePOSTAPICall('/dalalbull/api/submit_buy/', body);
   }
 
   sellOrSCStock(sell_sc, quantity, company, pending) {
@@ -66,7 +66,7 @@ export class DalalbullService extends Service {
     body.append('company', company);
     body.append('pending', pending==null?'':pending);
 
-    return this.makePOSTAPICall('/dalalbull/api/sell/', body);
+    return this.makePOSTAPICall('/dalalbull/api/submit_sell/', body);
   }
 
   pullBoughtStock() {
@@ -82,8 +82,7 @@ export class DalalbullService extends Service {
   }
 
   pullRanklist() {
-    return null;
-    // return this.makeGETAPICall('/dalalbull/api/leaderboard/');
+    return this.makeGETAPICall('/dalalbull/api/leaderboard/');
   }
 
   pullStockInHand() {

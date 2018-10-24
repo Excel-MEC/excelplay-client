@@ -94,4 +94,11 @@
   .main-stock .bro-submit {
     font-size: 26px;
   }
-  
+
+  .nav{
+    width: 100%;
+  }
+  li.active{
+    background: #3a3a3a;
+    border-radius: .2em .2em 0 0;
+  }
