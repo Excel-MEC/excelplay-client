@@ -97,7 +97,7 @@
   <div *ngIf="currentTab=='shares_in_hand'">
     <br/>
     <h3>{{ stock }} shares in hand</h3>
-    <table class="table table-responsive" *ngIf="stock_in_hand && stock_in_hand.thisStock">
+    <table class="table" *ngIf="stock_in_hand && stock_in_hand.thisStock">
       <tr>
         <th>Type</th>
         <th>Shares in hand</th>
