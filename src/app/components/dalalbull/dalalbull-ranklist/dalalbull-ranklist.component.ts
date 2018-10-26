@@ -22,6 +22,7 @@ export class DalalbullRanklistComponent implements OnInit {
   loadRanklist() {
     return this.dalalbullService.pullRanklist()
       .subscribe(response => {
+        console.log(response);
         this.ranklist = response["leaderboard_data"];
       });
   }

@@ -4,7 +4,7 @@
     <tr>
       <th>#</th>
       <th>Name</th>
-      <th>Net worth</th>
+      <!-- <th></th> -->
     </tr>
     <tbody *ngIf="ranklist">
       <tr *ngFor="let record of ranklist; let i=index">
@@ -15,9 +15,9 @@
           <img src="{{ record.image_url }}" alt="" class="propic">
           {{ record.name }}
         </td>
-        <td>
+        <!-- <td>
           {{ record.net_worth }}
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>

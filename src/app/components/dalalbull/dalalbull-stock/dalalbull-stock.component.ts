@@ -69,12 +69,13 @@ export class DalalbullStockComponent implements OnInit {
 
   isGoodTime(){
     // return true;
-    var x = new Date();
-    var time = x.getUTCHours()*60 + x.getUTCMinutes();
-    var day = x.getDay();
-    if( (time>=225 && time<1000) && ( day>=1 && day<=5 ) )
-      return true;
-    return false;
+    // var x = new Date();
+    // var time = x.getUTCHours()*60 + x.getUTCMinutes();
+    // var day = x.getDay();
+    // if( (time>=225 && time<1000) && ( day>=1 && day<=5 ) )
+    //   return true;
+    // return false;
+    return true;
   }
 
   switchTab(event, newTab) {
@@ -138,13 +139,13 @@ export class DalalbullStockComponent implements OnInit {
         this.disableButtons = true;
         this.dalalbullService.buyStock(this.quantity, this.stock, pendingValue)
           .subscribe(res => {
-            console.log(res);
-            if (res["cclose"]) {
+            if (res.hasOwnProperty("cclose")) {
               this.marketClosed = true;
             } else {
-              if (res["message"]) {
-                this.successMessage = res["message"];
+              if (res.hasOwnProperty("msg")) {
+                this.successMessage = res["msg"];
                 this.disableButtons = false;
+                console.log(res);
               }
             }
           });
@@ -165,8 +166,8 @@ export class DalalbullStockComponent implements OnInit {
             if (res["cclose"]) {
               this.marketClosed = true;
             } else {
-              if (res["message"]) {
-                this.successMessage = res["message"];
+              if (res["msg"]) {
+                this.successMessage = res["msg"];
                 this.disableButtons = false;
               }
             }
@@ -187,8 +188,8 @@ export class DalalbullStockComponent implements OnInit {
           if (res["cclose"]) {
             this.marketClosed = true;
           } else {
-            if (res["message"]) {
-              this.successMessage = res["message"];
+            if (res["msg"]) {
+              this.successMessage = res["msg"];
               this.disableButtons = false;
               this.stock_in_hand = res["trans"];
               this.stock_in_hand.thisStock = this.stock_in_hand.filter(s => s.company==this.stock);

@@ -14,7 +14,6 @@ import { DalalbullStockComponent } from '../dalalbull-stock/dalalbull-stock.comp
 
 import { AuthService } from '../../../services/auth.service';
 import { WebsocketService } from '../../../services/websocket.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dalalbull-play',
@@ -105,6 +104,7 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
 
   public stockMap: StockMap = new StockMap();
   private wsQueue = [];
+  private getAPIInterval;
 
   constructor(
     private dalalbullService: DalalbullService,
@@ -122,14 +122,21 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
     console.log(e);
   }
 
+  getAllData() {
+    this.getUserPortfolio();
+    this.getTickerData();
+    this.getGraphData();
+  }
+
   ngOnInit() {
 
     if (this.auth.isAuthenticated()) {
       this.dalalbullService.addDBUser()
         .subscribe(res => {
-          this.getUserPortfolio();
-          this.getTickerData();
-          this.getGraphData();
+          this.getAllData();
+          // this.getAPIInterval = setInterval(() => {
+          //   this.getAllData();
+          // }, 5*1000*60);
         });
     } else {
       this.router.navigate(['/signin']);
@@ -138,12 +145,9 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
   }
 
   isSubstring (s, t) {
-    if(s&&t){
+    if (s && t)
       return s.toLowerCase().includes(t.toLowerCase());
-    }
-    else{
-      return false;
-    }
+    return false;
   }
 
 
@@ -155,8 +159,8 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
     if (this.searchKeyword) {
       var result = this.search(this.tickerData, this.searchKeyword);
       this.filteredSearchResults = result;
-    } else {
-      this.filteredSearchResults = this.tickerData;
+  
+    this.filteredSearchResults = this.tickerData;
     }
   }
 
@@ -170,7 +174,8 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
   }
 
   handlePortfolioData(d) {
-    this.userPortfolio = d;
+    if (d.hasOwnProperty('cash_bal'))
+      this.userPortfolio = d;
   }
 
   getUserPortfolio() {
@@ -181,15 +186,16 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
         this.wsQueue.push(
           this.websocketService.pullPortfolioData()
             .subscribe(res2 => {
-              this.handlePortfolioData(res2);
+              if (res2.hasOwnProperty('data'))
+                this.handlePortfolioData(res2['data']);
             })
         );
       });
   }
 
   handleTickerData(r) {
-    if ('tickerData' in r) {
-      this.tickerData = r["tickerData"];
+    if (r.hasOwnProperty('tickerData')) {
+      this.tickerData = r['tickerData'];
       this.tickerSymbols = [];
       this.tickerData.forEach((t) => {
         this.tickerSymbols.push(t.name);
@@ -209,15 +215,16 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
         this.wsQueue.push(
           this.websocketService.pullTickerData()
             .subscribe(res2 => {
-              this.handleTickerData(res2);
+              if (res2.hasOwnProperty('data'))
+                this.handleTickerData(res2['data']);
             })
         );
       });
   }
 
   handleGraphData(d) {
-    if ('graph_data' in d) {
-      var p = d["graph_data"];
+    if (d.hasOwnProperty('graph_data')) {
+      var p = d["graph_data"].slice(-50);
       this.data.datasets[0].data = [];
       this.data.labels = [];
       for (let x of p) {
@@ -235,7 +242,8 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
         this.wsQueue.push(
           this.websocketService.pullGraphData()
             .subscribe(res2 => {
-              this.handleGraphData(res2);
+              if (res2.hasOwnProperty('data'))
+                this.handleGraphData(res2['data']);
             })
         );
       });
@@ -249,9 +257,10 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    var w;
-    for (w in this.wsQueue)
-      w.unsubscribe();
+    // var w;
+    // for (w in this.wsQueue)
+    //   w.unsubscribe();
+    clearInterval(this.getAPIInterval);
   }
 
 }

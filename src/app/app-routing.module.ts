@@ -35,7 +35,7 @@ export const AppRoutes: Routes = [
     //     { path: ':question_id', component: HashincludePlayComponent },
     //   ] },
       // { path: 'dalalbull', component: DalalbullFakeComponent },
-      { path: 'dalalbull-test441', component: DalalbullComponent, children: [
+      { path: 'dalalbull', component: DalalbullComponent, children: [
         { path: '', component: DalalbullPlayComponent },
         { path: 'ranklist', component: DalalbullRanklistComponent },
         { path: 'rules', component: DalalbullRulesComponent },

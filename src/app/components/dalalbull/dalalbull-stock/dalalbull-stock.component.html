@@ -8,8 +8,8 @@
     <li class="nav-item px-3" [ngClass]="{'active': currentTab=='buy'}" (click)="switchTab($event, 'buy')"><a>Buy</a></li>
     <li class="nav-item px-3" [ngClass]="{'active': currentTab=='ss'}" (click)="switchTab($event, 'ss')"><a>Short Sell</a></li>
     <li class="nav-item px-3" [ngClass]="{'active': currentTab=='shares_in_hand'}" (click)="switchTab($event, 'shares_in_hand')"><a>Shares in hand</a></li>
-    <!-- <li [ngClass]="{'active': currentTab=='sell'}" (click)="switchTab($event, 'sell')"><a>Sell</a></li>
-    <li [ngClass]="{'active': currentTab=='sc'}" (click)="switchTab($event, 'sc')"><a>Short Cover</a></li> -->
+    <!-- <li class="nav-item px-3" [ngClass]="{'active': currentTab=='sell'}" (click)="switchTab($event, 'sell')"><a>Sell</a></li>
+    <li class="nav-item px-3" [ngClass]="{'active': currentTab=='sc'}" (click)="switchTab($event, 'sc')"><a>Short Cover</a></li> -->
   </ul>
   <div *ngIf="currentTab=='stock'">
     <div *ngIf="data">
