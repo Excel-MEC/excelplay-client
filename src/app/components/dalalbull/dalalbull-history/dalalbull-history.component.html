@@ -4,7 +4,7 @@
     <li [ngClass]="{'active': currentTab=='pending'}"><a href="/games/dalalbull/history/pending" [routerLink]="'/games/dalalbull/history/pending'">Pending Transactions</a></li>
   </ul>
   <h2>Transaction History</h2>
-  <table class="table table-responsive" *ngIf="currentTab=='completed'">
+  <table class="table" *ngIf="currentTab=='completed'">
     <tr>
       <th>#</th>
       <th>Company</th>
