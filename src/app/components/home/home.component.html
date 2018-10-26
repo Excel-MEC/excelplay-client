@@ -18,7 +18,7 @@
           <span class="event-name">#include</span>
           <span class="rank-text">Rank</span>
           <span class="rank-value" *ngIf="!(myrank && myrank.hashinclude && myrank.hashinclude.rank)">N/A</span>
-          <span class="rank-value" *ngIf="myrank && myrank.hashinclude && myrank.hashinclude.rank">{{ myrank.hirank }}</span>
+          <span class="rank-value" *ngIf="myrank && myrank.hashinclude && myrank.hashinclude.rank">{{ myrank.hashinclude.rank }}</span>
         </a>
       </div>
     </div>
@@ -30,7 +30,7 @@
           <span class="event-name">Dalalbull</span>
           <span class="rank-text">Rank</span>
           <span class="rank-value" *ngIf="!(myrank && myrank.dalalbull && myrank.dalalbull.rank)">N/A</span>
-          <span class="rank-value" *ngIf="myrank && myrank.dalalbull && myrank.dalalbull.rank">{{ myrank.dbrank }}</span>
+          <span class="rank-value" *ngIf="myrank && myrank.dalalbull && myrank.dalalbull.rank">{{ myrank.dalalbull.rank }}</span>
         </a>
       </div>
       <div class="col-lg-4 inactive-game">
@@ -39,7 +39,7 @@
           <span class="event-name">Echo</span>
           <span class="rank-text">Rank</span>
           <span class="rank-value" *ngIf="!(myrank && myrank.echo && myrank.echo.rank)">N/A</span>
-          <span class="rank-value" *ngIf="myrank && myrank.echo && myrank.echo.rank">{{ myrank.echorank }}</span>
+          <span class="rank-value" *ngIf="myrank && myrank.echo && myrank.echo.rank">{{ myrank.echo.rank }}</span>
         </a>
       </div>
     </div>
