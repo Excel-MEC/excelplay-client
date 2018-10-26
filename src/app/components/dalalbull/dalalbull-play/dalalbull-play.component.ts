@@ -14,6 +14,7 @@ import { DalalbullStockComponent } from '../dalalbull-stock/dalalbull-stock.comp
 
 import { AuthService } from '../../../services/auth.service';
 import { WebsocketService } from '../../../services/websocket.service';
+import { CommonService } from '../../../services/common.service';
 
 @Component({
   selector: 'app-dalalbull-play',
@@ -52,6 +53,7 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
   blurStatus: string = 'noblur';
   activeStock: string;
   stockVisibility: string = 'invisible';
+  userRanks;
 
   data = {
     labels: [],
@@ -110,7 +112,8 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
     private dalalbullService: DalalbullService,
     private auth: AuthService,
     private router: Router,
-    private websocketService: WebsocketService
+    private websocketService: WebsocketService,
+    private commonService: CommonService,
   ) { }
 
   // events
@@ -124,6 +127,7 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
 
   getAllData() {
     this.getUserPortfolio();
+    this.getAllRanks();
     this.getTickerData();
     this.getGraphData();
   }
@@ -205,6 +209,13 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
       });
       this.filteredSearchResults = this.tickerData;
     }
+  }
+
+  getAllRanks() {
+    this.commonService.pullMyRanks()
+        .subscribe(myrank => {
+          this.userRanks = myrank;
+        });
   }
 
   getTickerData() {
