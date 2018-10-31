@@ -59,7 +59,7 @@
         <ngx-chartjs [options]="options" [legend]="legend" [data]="data" type="line"></ngx-chartjs>
       </div>
       <br>
-      <div class="user-data" *ngIf="userRanks && userRanks.dalalbull && userRanks.dalalbull.rank">
+      <div class="user-data" *ngIf="userPortfolio && userPortfolio.net_worth && userPortfolio.margin && userRanks && userRanks.dalalbull && userRanks.dalalbull.rank">
         <div class="row">
           <div class="col-lg-6">
             <h1>{{ userRanks.dalalbull.rank }}</h1>

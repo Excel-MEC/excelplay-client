@@ -163,8 +163,6 @@ export class DalalbullPlayComponent implements OnInit, OnDestroy {
     if (this.searchKeyword) {
       var result = this.search(this.tickerData, this.searchKeyword);
       this.filteredSearchResults = result;
-  
-    this.filteredSearchResults = this.tickerData;
     }
   }
 
