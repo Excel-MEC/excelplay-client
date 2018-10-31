@@ -12,13 +12,11 @@
           <span class="rank-value" *ngIf="myrank && myrank.kryptos && myrank.kryptos.rank">{{ myrank.kryptos.rank }}</span>
         </a>
       </div>
-      <div class="col-lg-4 inactive-game">
-        <a href="#" [@homeState]="homeState" [routerLink]="['/games', 'hashinclude']">
+      <div class="col-lg-4">
+        <a href="https://www.hackerrank.com/hashinclude-1" [@homeState]="homeState" target="_blank">
           <img src="assets/images/dock/hash2-grey.png" alt="">
           <span class="event-name">#include</span>
-          <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!(myrank && myrank.hashinclude && myrank.hashinclude.rank)">N/A</span>
-          <span class="rank-value" *ngIf="myrank && myrank.hashinclude && myrank.hashinclude.rank">{{ myrank.hashinclude.rank }}</span>
+          <img src="assets/images/hrank-logo.png" style="max-height: 180px;" />
         </a>
       </div>
     </div>
