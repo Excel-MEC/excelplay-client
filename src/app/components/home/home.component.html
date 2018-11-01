@@ -31,13 +31,11 @@
           <span class="rank-value" *ngIf="myrank && myrank.dalalbull && myrank.dalalbull.rank">{{ myrank.dalalbull.rank }}</span>
         </a>
       </div>
-      <div class="col-lg-4 inactive-game">
-        <a href="#" [@homeState]="homeState" [routerLink]="['/games', 'echo']">
+      <div class="col-lg-4">
+        <a href="http://hackerrank.com/echo-1" [@homeState]="homeState">
           <img src="assets/images/dock/ech2-grey.png" alt="">
           <span class="event-name">Echo</span>
-          <span class="rank-text">Rank</span>
-          <span class="rank-value" *ngIf="!(myrank && myrank.echo && myrank.echo.rank)">N/A</span>
-          <span class="rank-value" *ngIf="myrank && myrank.echo && myrank.echo.rank">{{ myrank.echo.rank }}</span>
+          <img src="assets/images/hrank-logo.png" style="max-height: 180px;" />
         </a>
       </div>
     </div>
