@@ -14,8 +14,8 @@ import { ProgressiveLoader } from '../classes/progressive-loader';
 export class AuthService {
 
   auth0 = new auth0.WebAuth({
-    clientID: 'GuilcIQmL08rvCGrIoKXx4AdnvMNod0i',
-    domain: 'excelplay2018.auth0.com',
+    clientID: 'SIPlp6RHA9CbeJ5SUTa0RUvQRKiK8XBp',
+    domain: 'ajeshkumar.eu.auth0.com',
     responseType: 'token id_token',
     // audience: 'https://excelplay2k18.auth0.com/userinfo',
     redirectUri: 'http://' + window.location.hostname + (window.location.port ? (':' + window.location.port) : '') + '/callback',
