@@ -70,9 +70,10 @@ export class DalalbullStockComponent implements OnInit {
   isGoodTime(){
     // return true;
     var x = new Date();
+    console.log(x);
     var time = x.getUTCHours()*60 + x.getUTCMinutes();
     var day = x.getDay();
-    if( (time>=225 && time<1000) && ( day>=1 && day<=5 ) )
+    if( (time>=810 && time<1500) && ( day>=1 && day<=5 ) )
       return true;
     return false;
   }
