@@ -23,7 +23,7 @@
     "@angular/router": "^6.1.0",
     "@ctrl/ngx-chartjs": "^1.0.3",
     "auth0-js": "^9.8.0",
-    "chart.js": "^2.7.3",
+    "chart.js": "^2.9.4",
     "core-js": "^2.5.4",
     "ng2-fuse": "^0.1.0",
     "ngx-cookie-service": "^1.0.10",
